@@ -1,0 +1,26 @@
+
+55.3*X^22+4.5*X^1-9.3*X^2=1*X^0
+
+--------
+
+^(?!\*)                    if not starting by *
+(
+(\+|-)?(?!$|\\+|-|=|\*)   + - not followed by... followed by digit +2
+(
+(\d+(\.\\d+)?)?           (digit or plus)(.d+)  both optional 2.12
+(\*(?=[A-z]))?             * if followed by letter, not just *              *X
+([A-z](\^\d+)?)?          X^12
+)
+(?=\\+|-|=|$)               2.12*X^12 if followed by + - = or end
+)+                          2.12*X^12+  one or many
+
+={1}                        only one =
+
+(
+(\+|-)?(?!$|\+|-|\\*)             + or - not if not followed by +-*
+(
+(\d+(\.\d+)?)?                   +22  .55  both optional
+(\*(?=[A-z]))?([A-z](\^\d+)?)?   match * only if followed by letter,    *X^12
+)
+(?=\+|-|$)  +22.5*X^12 only if followed by + - or end
+)+$
