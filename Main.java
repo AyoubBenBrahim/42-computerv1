@@ -4,28 +4,21 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Main {
-    static int xxxxxxxx;
+    private static final String pattern = "^(?!\\*)((\\+|-)?(?!$|\\+|-|=|\\*)((\\d+(\\.\\d+)?)?(\\*(?=[A-z]))?([A-z](\\^\\d+)?)?)(?=\\+|-|=|$))+={1}((\\+|-)?(?!$|\\+|-|\\*)((\\d+(\\.\\d+)?)?(\\*(?=[A-z]))?([A-z](\\^\\d+)?)?)(?=\\+|-|$))+$";
+
+    static void myMethod() {
+        System.out.println("I just got executed!");
+    }
 
     public static void main(String[] args) {
         try {
-            String type;
-            int height;
+            // System.out.println("input is " + args[0]);
 
-            if (args.length != 1) {
-                throw new MyCustomException("Invalid Argument:\n\t./computor 8 * X^0 - 6 * X^1 + 0 * X^2 - 5.6 * X^3 = 3 * X^0");
-            }
+            if ((args[0].matches(pattern)) == false)
+                throw new ComputorV1Exception("Equation BAD FORMAT\n");
+            System.out.println("Congrats");
 
-            System.out.println(args.length);
-
-            if (Arrays.toString(args).isEmpty())
-            System.out.println("emptyyy");
-      
-            System.out.println("input is " + Arrays.toString(args));
-
-            // if ((pattern.matches("^[A-Z][A-z0-9]+$")) == false)
-            //     throw new MyCustomException("AireCraft Name Starts With UpperCase Alpha\n");
-
-        } catch (MyCustomException e) {
+        } catch (ComputorV1Exception e) {
             e.printStackTrace();
         }
     }
