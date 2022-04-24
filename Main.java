@@ -52,10 +52,7 @@ public class Main {
             }
             else
             {
-                // PolynomialEquation p = new PolynomialEquation(
-                //     Float.parseFloat(str.substring(0, str.indexOf('*'))),
-                //     Float.parseFloat(str.substring(str.indexOf('^')))
-                //     );
+             
 PolynomialEquation p = new PolynomialEquation(
                             Float.parseFloat(str.substring(0, str.indexOf('*'))),
                              Integer.parseInt(str.substring(str.indexOf('^')))
