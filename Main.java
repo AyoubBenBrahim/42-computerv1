@@ -90,12 +90,11 @@ public class Main {
 
         // }
 
-        ListIterator<PolynomialEquation> iterator = Polynomials.listIterator();
-
-        while (iterator.hasNext()) {
-            // if (Integer.compare(iterator.next().getDegree(), iterator.)
-            System.out.println(iterator.next());
-        }
+        // ListIterator<PolynomialEquation> iterator = Polynomials.listIterator();
+        // while (iterator.hasNext()) {
+        //     // if (Integer.compare(iterator.next().getDegree(), iterator.)
+        //     System.out.println(iterator.next());
+        // }
 
         ArrayList<Integer> numbs = new ArrayList<Integer>();
         numbs.add(1);
@@ -105,33 +104,22 @@ public class Main {
         numbs.add(2);
         numbs.forEach(p -> System.out.println(p));
         System.out.println("*********");
-        // Get the iterator
         // Iterator<String> it = numbs.iterator();
-
         // while (it.hasNext())
         // System.out.println((it.next()));
 
-        for (int i = 0; i < numbs.size() - 1; i++) {
-            // System.out.println(numbs.get(i) + " next " + numbs.get(i + 1));
+        for (int i = 0; i < Polynomials.size() - 1; i++) {
+            System.out.println(Polynomials.get(i).degree + " next " + Polynomials.get(i + 1).degree);
 
-            if (numbs.get(i) == numbs.get(i+1) || (i >= 1 && numbs.get(i) == numbs.get(i - 1)))
-            {
-                int somme = numbs.get(i) + numbs.get(i+1);
-                numbs.set(i+1, somme * 10000);
-                numbs.remove(i);
-                // i--;
-                // numbs.add(i, somme * 10000);
-                // numbs.remove(i + 1);
-            }
-            // if (i == 2) {
+            // if (numbs.get(i) == numbs.get(i+1) || (i >= 1 && numbs.get(i) == numbs.get(i - 1)))
+            // {
+            //     int somme = numbs.get(i) + numbs.get(i+1);
+            //     numbs.set(i+1, somme * 10000);
             //     numbs.remove(i);
-            //     numbs.add(i, i * 100);
             // }
-
         }
 
-        // numbs.add(0, 200);
-        numbs.forEach(p -> System.out.println(p));
+        // numbs.forEach(p -> System.out.println(p));
 
     }
 
