@@ -117,6 +117,14 @@ public class Main {
             //     numbs.set(i+1, somme * 10000);
             //     numbs.remove(i);
             // }
+
+            if (Polynomials.get(i) == Polynomials.get(i+1) || (i >= 1 && Polynomials.get(i) == Polynomials.get(i - 1)))
+            {
+                float sommeCoef = Polynomials.get(i).coefficient + Polynomials.get(i+1).coefficient;
+                PolynomialEquation pl = new PolynomialEquation(sommeCoef, Polynomials.get(i).degree);
+                Polynomials.set(i+1, pl);
+                Polynomials.remove(i);
+            }
         }
 
         // numbs.forEach(p -> System.out.println(p));
