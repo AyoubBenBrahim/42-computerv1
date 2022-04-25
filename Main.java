@@ -49,14 +49,11 @@ public class Main {
             // System.out.println(str);
             if (!str.isEmpty() && str.indexOf('*') == -1) {
                 sum += Float.parseFloat(str);
-            }
-            else
-            {
-             
-PolynomialEquation p = new PolynomialEquation(
-                            Float.parseFloat(str.substring(0, str.indexOf('*'))),
-                             Integer.parseInt(str.substring(str.indexOf('^')))
-                             );
+            } else {
+
+                PolynomialEquation p = new PolynomialEquation(
+                        Float.parseFloat(str.substring(0, str.indexOf('*'))),
+                        Integer.parseInt(str.substring(str.indexOf('^'))));
 
                 Polynomials.add(p);
             }
@@ -64,6 +61,8 @@ PolynomialEquation p = new PolynomialEquation(
 
         System.out.println(sum);
 
+        for (PolynomialEquation p : Polynomials)
+            System.err.println(p.toString());
 
     }
 
