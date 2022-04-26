@@ -8,11 +8,22 @@ public class Main {
 
     static String reducedForm(String input) {
 
+        for (int i = 0; i < input.length(); i++) {
+            if ((i == 0 && input.charAt(i) == 'X') || (i > 0 && input.charAt(i) == 'X' && input.charAt(i - 1) != '*')) {
+                input = input.substring(0, i) + "1*X" + input.substring(i + 1);
+                i+=2;
+            }
+        }
+        System.out.println("input = " + input);
+
         String[] arr = input.split("=");
         String leftHandSide = arr[0];
         String rightHandSide = arr[1];
         // rightHandSide = "8.123*X^109991-6*X^4+11*X^2-5.6*X^3+33-15-8*X^2";
         // leftHandSide = "2*X^5-6*X^4+11*X^2-5.6*X^3+22-15-18*X^2";
+
+        
+
 
         if (Character.isDigit(rightHandSide.charAt(0)))
             rightHandSide = ("+").concat(rightHandSide);
@@ -47,12 +58,13 @@ public class Main {
 
         for (String str : splitString) {
             System.out.println("===== " + str + " ======");
-            if (str.indexOf('*') == -1) {
+            if (str.indexOf('X') == -1) { //if (str.indexOf('*') == -1) { // -*--*--*-*-*
                 if (!str.isEmpty())
                     sumNumbers += Float.parseFloat(str);
             } else {
+                int endIndex = (str.indexOf('*') != -1) ? str.indexOf('*'): str.indexOf('X');
                 PolynomialEquation p = new PolynomialEquation(
-                        Float.parseFloat(str.substring(0, str.indexOf('*'))),
+                        Float.parseFloat(str.substring(0, endIndex)),
                         Integer.parseInt(str.substring(str.indexOf('^') + 1)));
 
                 Polynomials.add(p);
@@ -63,7 +75,7 @@ public class Main {
 
         System.out.println("****** sorted ****");
 
-        Polynomials.forEach(p -> System.out.println(p));
+        // Polynomials.forEach(p -> System.out.println(p));
         Collections.sort(Polynomials, new Comparator<PolynomialEquation>() {
             @Override
             public int compare(PolynomialEquation p1, PolynomialEquation p2) {
@@ -140,8 +152,8 @@ public class Main {
             if (delta > 0) {
                 System.out.println("Discriminant is strictly positive, the two solutions are: ");
 
-                Double x1 = (-1 * B + Math.sqrt(delta)) / 2 * A;
-                Double x2 = (-1 * B - Math.sqrt(delta)) / 2 * A;
+                Double x1 = (-B + Math.sqrt(delta)) / (2 * A);
+                Double x2 = (-B - Math.sqrt(delta)) / (2 * A);
 
                 System.out.println("x1 = " + x1);
                 System.out.println("x2 = " + x2);
@@ -164,6 +176,24 @@ public class Main {
 
             if ((args[0].matches(pattern)) == false)
                 throw new ComputorV1Exception("Equation BAD FORMAT\n");
+            Character letter;
+            for (int i = 0; i < args[0].length(); i++)
+            {
+                if (Character.isAlphabetic(args[0].charAt(i)))
+                {
+                    letter = args[0].charAt(i);
+                    break;
+                }
+            }
+            long countLetter = args[0].chars().filter(ch -> ch == ).count();
+            long countAlphas = args[0].chars().filter(ch -> Character.isLetter(ch)).count();
+
+
+            // String someString = "123ABvdfghjdLK LJHJHJk12354*/*-+.)()))A A A 12354";
+            // long count = someString.chars().filter(ch -> ch == 'E').count();
+            // long countAlphas = someString.chars().filter(ch -> Character.isLetter(ch)).count();
+            // System.out.println("countAlphas = " + countAlphas);
+
             reducedForm(args[0]);
 
         } catch (Exception e) {
