@@ -14,9 +14,13 @@ public class Main {
         // rightHandSide = "8.123*X^109991-6*X^4+11*X^2-5.6*X^3+33-15-8*X^2";
         // leftHandSide = "2*X^5-6*X^4+11*X^2-5.6*X^3+22-15-18*X^2";
 
-        if (rightHandSide.matches("^\\d"))
+        if (Character.isDigit(rightHandSide.charAt(0)))
             rightHandSide = ("+").concat(rightHandSide);
-        if (leftHandSide.matches("^\\d"))
+
+        // if (rightHandSide.matches("^\\d+"))
+        // rightHandSide = ("+").concat(rightHandSide);
+
+        if (Character.isDigit(leftHandSide.charAt(0)))
             leftHandSide = ("+").concat(leftHandSide);
         System.out.println("rightHandSide = " + rightHandSide);
         for (int i = 0; i < rightHandSide.length(); i++) {
@@ -122,8 +126,14 @@ public class Main {
         // ax2 + bx + c ==> b*b – 4ac
         // bx + ax^2 + c
 
+        Float res;
         if (reduced.indexOf("^2") == -1) {
-
+            if (sumNumbers == 0)
+                res = 0.0f;
+            else {
+                res = (sumNumbers * -1) / Polynomials.get(0).getCoefficient();
+            }
+            System.out.println("The solution is: \n" + res);
         }
 
         else {
