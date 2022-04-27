@@ -9,17 +9,24 @@ public class Main {
     static String reducedForm(String input, char letter) {
 
         for (int i = 0; i < input.length(); i++) {
-            if ((i == 0 && input.charAt(i) == letter) || (i > 0 && input.charAt(i) == letter && input.charAt(i - 1) != '*')) {
-                input = input.substring(0, i) + ("1*").concat(Character.toString(letter)) + input.substring(i + 1);
-                i += 2;
+            if ((i == 0 && input.charAt(i) == letter)
+                    || (i > 0 && input.charAt(i) == letter && input.charAt(i - 1) != '*')) {
+                if (Character.isDigit(input.charAt(i - 1))) {
+                    input = input.substring(0, i) + ("*").concat(Character.toString(letter)) + input.substring(i + 1);
+                    i++;
+                } else {
+                    input = input.substring(0, i) + ("1*").concat(Character.toString(letter)) + input.substring(i + 1);
+                    i += 2;
+                }
             }
-            if ((i == input.length() - 1 && input.charAt(i) == letter) || (i + 1 != input.length() && input.charAt(i) == letter && input.charAt(i + 1) != '^')) {
+            if ((i == input.length() - 1 && input.charAt(i) == letter)
+                    || (i + 1 != input.length() && input.charAt(i) == letter && input.charAt(i + 1) != '^')) {
                 input = input.substring(0, i) + Character.toString(letter).concat("^1") + input.substring(i + 1);
                 i += 2;
             }
         }
         System.out.println("input = " + input);
-// System.exit(0);
+        // System.exit(0);
         String[] arr = input.split("=");
         String leftHandSide = arr[0];
         String rightHandSide = arr[1];
@@ -109,17 +116,24 @@ public class Main {
 
         maxDegree = Integer.parseInt(reduced.substring(reduced.lastIndexOf("^") + 1));
 
-        if (sumNumbers >= 0)
+        if (sumNumbers > 0)
             reduced.append("+" + Float.toString(sumNumbers) + " = 0");
+        else if (sumNumbers == 0)
+            reduced.append(" = 0");
         else
             reduced.append(Float.toString(sumNumbers) + " = 0");
 
         System.out.println("Reduced form: " + reduced);
         System.out.println("Polynomial degree: " + maxDegree);
-        // String reducedEqu = reduced.toString().replace(".0", "");
-
+        String reducedEqu = reduced.toString().replace(".0", "");
+        // System.out.println("reddduced " + reducedEqu);
+        System.out.println("Reduced form: " + reducedEqu);
+        if (maxDegree > 2) {
+            System.err.println("The polynomial degree is strictly greater than 2, I can't solve.");
+            System.exit(1);
+        }
         Float A;
-        if (reduced.indexOf("^2") != -1) {
+        if (reducedEqu.indexOf("^2") != -1) {
             if (Polynomials.size() == 2)
                 A = Polynomials.get(1).getCoefficient();
             else
@@ -127,11 +141,11 @@ public class Main {
         } else
             A = 0.0f;
 
-        Float B = (reduced.indexOf("^1") != -1) ? Polynomials.get(0).getCoefficient() : 0.0f;
+        Float B = (reducedEqu.indexOf("^1") != -1) ? Polynomials.get(0).getCoefficient() : 0.0f;
 
         System.out.println("A = " + A);
         System.out.println("B = " + B);
-        System.out.println("sumNumbers = " + sumNumbers);
+        System.out.println("C = " + sumNumbers);
 
         Double delta = (double) (B * B - 4 * A * sumNumbers);
 
@@ -140,7 +154,7 @@ public class Main {
         // bx + ax^2 + c
 
         Float res;
-        if (reduced.indexOf("^2") == -1) {
+        if (reducedEqu.indexOf("^2") == -1) {
             if (sumNumbers == 0)
                 res = 0.0f;
             else {
@@ -161,14 +175,22 @@ public class Main {
             }
 
             if (delta == 0) {
-                System.out.println("Discriminant is Equal to Zero: ");
+                System.out.println("Discriminant is Equal to Zero ");
+                System.out.println("the quadratic equation has two equal real roots.: ");
 
+                System.out.println("x1 = x2 = " + (-B / (2 * A)));
             }
-            
+
             if (delta < 0) {
-                System.out.println("Discriminant is strictly Negative, the two solutions are: ");
+                System.out.println("Discriminant is strictly Negative ");
                 System.out.println("the quadratic equation has two different complex roots : ");
 
+                System.out.println(
+                        "x1 = (-B + β) / (2 * A) = (" + (-B.intValue() + " + " + "β") + ") / " + (2 * A.intValue()));
+                System.out.println(
+                        "x2 = (-B - β) / (2 * A) = (" + (-B.intValue() + " - " + "β") + ") / " + (2 * A.intValue()));
+                System.out.println("where β^2 = Delta");
+                System.out.println("Δ = " + delta.intValue() + " = " + (-delta.intValue()) + "i²");
             }
         }
 
@@ -231,6 +253,8 @@ class PolynomialEquation {
             coef = "+" + Float.toString(this.coefficient);
         else
             coef = Float.toString(this.coefficient);
+        if (getCoefficient() == 0)
+            return "";
         return coef + "*" + Character.toString(variable) + "^" + this.degree;
     }
 }
