@@ -6,24 +6,25 @@ public class Main {
     private static Integer maxDegree;
     public static ArrayList<PolynomialEquation> Polynomials = new ArrayList<PolynomialEquation>();
 
-    static String reducedForm(String input) {
+    static String reducedForm(String input, char letter) {
 
         for (int i = 0; i < input.length(); i++) {
-            if ((i == 0 && input.charAt(i) == 'X') || (i > 0 && input.charAt(i) == 'X' && input.charAt(i - 1) != '*')) {
-                input = input.substring(0, i) + "1*X" + input.substring(i + 1);
-                i+=2;
+            if ((i == 0 && input.charAt(i) == letter) || (i > 0 && input.charAt(i) == letter && input.charAt(i - 1) != '*')) {
+                input = input.substring(0, i) + ("1*").concat(Character.toString(letter)) + input.substring(i + 1);
+                i += 2;
+            }
+            if ((i == input.length() - 1 && input.charAt(i) == letter) || (i + 1 != input.length() && input.charAt(i) == letter && input.charAt(i + 1) != '^')) {
+                input = input.substring(0, i) + Character.toString(letter).concat("^1") + input.substring(i + 1);
+                i += 2;
             }
         }
         System.out.println("input = " + input);
-
+// System.exit(0);
         String[] arr = input.split("=");
         String leftHandSide = arr[0];
         String rightHandSide = arr[1];
         // rightHandSide = "8.123*X^109991-6*X^4+11*X^2-5.6*X^3+33-15-8*X^2";
         // leftHandSide = "2*X^5-6*X^4+11*X^2-5.6*X^3+22-15-18*X^2";
-
-        
-
 
         if (Character.isDigit(rightHandSide.charAt(0)))
             rightHandSide = ("+").concat(rightHandSide);
@@ -58,14 +59,14 @@ public class Main {
 
         for (String str : splitString) {
             System.out.println("===== " + str + " ======");
-            if (str.indexOf('X') == -1) { //if (str.indexOf('*') == -1) { // -*--*--*-*-*
+            if (str.indexOf(letter) == -1) {
                 if (!str.isEmpty())
                     sumNumbers += Float.parseFloat(str);
             } else {
-                int endIndex = (str.indexOf('*') != -1) ? str.indexOf('*'): str.indexOf('X');
+                int endIndex = (str.indexOf('*') != -1) ? str.indexOf('*') : str.indexOf(letter);
                 PolynomialEquation p = new PolynomialEquation(
                         Float.parseFloat(str.substring(0, endIndex)),
-                        Integer.parseInt(str.substring(str.indexOf('^') + 1)));
+                        Integer.parseInt(str.substring(str.indexOf('^') + 1)), letter);
 
                 Polynomials.add(p);
             }
@@ -90,7 +91,7 @@ public class Main {
         for (int i = 0; i < Polynomials.size() - 1; i++) {
             if (Polynomials.get(i).getDegree() == Polynomials.get(i + 1).getDegree()) {
                 float sumCoef = Polynomials.get(i).getCoefficient() + Polynomials.get(i + 1).getCoefficient();
-                PolynomialEquation pl = new PolynomialEquation(sumCoef, Polynomials.get(i).getDegree());
+                PolynomialEquation pl = new PolynomialEquation(sumCoef, Polynomials.get(i).getDegree(), letter);
                 Polynomials.set(i + 1, pl);
                 Polynomials.remove(i);
                 i--;
@@ -160,10 +161,13 @@ public class Main {
             }
 
             if (delta == 0) {
+                System.out.println("Discriminant is Equal to Zero: ");
 
             }
-
+            
             if (delta < 0) {
+                System.out.println("Discriminant is strictly Negative, the two solutions are: ");
+                System.out.println("the quadratic equation has two different complex roots : ");
 
             }
         }
@@ -175,26 +179,25 @@ public class Main {
         try {
 
             if ((args[0].matches(pattern)) == false)
-                throw new ComputorV1Exception("Equation BAD FORMAT\n");
-            Character letter;
-            for (int i = 0; i < args[0].length(); i++)
-            {
-                if (Character.isAlphabetic(args[0].charAt(i)))
-                {
+                throw new ComputorV1Exception("Equation Bad Syntaxe FORMAT\n");
+            char letter = 'X';
+            for (int i = 0; i < args[0].length(); i++) {
+                if (Character.isAlphabetic(args[0].charAt(i))) {
                     letter = args[0].charAt(i);
                     break;
                 }
             }
-            long countLetter = args[0].chars().filter(ch -> ch == ).count();
+            final char tempLetter = letter;
+            long countVariables = args[0].chars().filter(ch -> ch == tempLetter).count();
             long countAlphas = args[0].chars().filter(ch -> Character.isLetter(ch)).count();
 
+            System.out.println("countVariables = " + countVariables);
+            System.out.println("countAlphas = " + countAlphas);
 
-            // String someString = "123ABvdfghjdLK LJHJHJk12354*/*-+.)()))A A A 12354";
-            // long count = someString.chars().filter(ch -> ch == 'E').count();
-            // long countAlphas = someString.chars().filter(ch -> Character.isLetter(ch)).count();
-            // System.out.println("countAlphas = " + countAlphas);
+            if (countVariables != countAlphas)
+                throw new ComputorV1Exception("Equation BAD FORMAT: There Are Multiple Diffirent Variables\n");
 
-            reducedForm(args[0]);
+            reducedForm(args[0], letter);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -204,13 +207,12 @@ public class Main {
 
 class PolynomialEquation {
     private float coefficient;
-    // char variable;
-    private int degree; // exponent
-    // int constant;
+    char variable;
+    private int degree;
 
-    PolynomialEquation(float cf, int d) {
+    PolynomialEquation(float cf, int d, char v) {
         this.coefficient = cf;
-        // this.variable = v;
+        this.variable = v;
         this.degree = d;
     }
 
@@ -229,7 +231,6 @@ class PolynomialEquation {
             coef = "+" + Float.toString(this.coefficient);
         else
             coef = Float.toString(this.coefficient);
-
-        return coef + "*X^" + this.degree;
+        return coef + "*" + Character.toString(variable) + "^" + this.degree;
     }
 }
