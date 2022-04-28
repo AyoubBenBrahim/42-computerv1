@@ -71,8 +71,6 @@ public class Main {
 
         String[] splitString = fullEquation.split("#");
 
-        // System.out.println("len = " + splitString.length);
-
         float sumNumbers = 0;
 
         System.out.println("****** Extracting Terms ****");
@@ -105,7 +103,7 @@ public class Main {
         });
 
         Polynomials.forEach(p -> System.out.println(p));
-
+        // "-X + X + 1 = 0"
         System.out.println("\n****** Sum By Same Degree ****\n");
 
         for (int i = 0; i < Polynomials.size() - 1; i++) {
@@ -119,6 +117,7 @@ public class Main {
         }
 
         Polynomials.forEach(p -> System.out.println(p));
+
         System.out.println("\n****** Concat Terms ****\n");
 
         StringBuilder reduced = new StringBuilder();
@@ -126,11 +125,6 @@ public class Main {
         Polynomials.forEach(p -> {
             reduced.append(p.toString());
         });
-
-                System.out.println("Reduced formmmmm: " + reduced);
-
-        System.out.println("educed.substring(reduced.lastIndexOf(^)" + reduced.substring(reduced.lastIndexOf("^")).toString());
-        // System.out.println("educed.substring(reduced.lastIndexOf(^) + 1" + reduced.substring(reduced.lastIndexOf("^") + 1).toString());
 
         maxDegree = Integer.parseInt(reduced.substring(reduced.lastIndexOf("^") + 1));
 
@@ -282,12 +276,12 @@ class PolynomialEquation {
         String coef;
 
         if (coefficient >= 0)
-            coef = "+" + (detectType.isInteger(coefficient) ? Integer.toString((int) this.coefficient)
+            coef = "+" + (detectType.isInteger(coefficient) ? Integer.toString((int)coefficient)
                     : Float.toString(this.coefficient));
         else
-            coef = Float.toString(this.coefficient);
-        if (getCoefficient() == 0)
-            return "";
+            coef = (detectType.isInteger(coefficient) ? Integer.toString((int)coefficient) : Float.toString(coefficient));;
+        // if (getCoefficient() == 0)
+        //     return "0.0"; // ""
         return coef + "*" + Character.toString(variable) + "^" + this.degree;
     }
 }
