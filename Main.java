@@ -1,6 +1,6 @@
 
 import java.util.*;
-import  noName.*;
+import noName.*;
 
 public class Main {
     private static final String pattern = "^(?!\\*)((\\+|-)?(?!$|\\+|-|=|\\*)((\\d+(\\.\\d+)?)?(\\*(?=[A-z]))?([A-z](\\^\\d+)?)?)(?=\\+|-|=|$))+={1}((\\+|-)?(?!$|\\+|-|\\*)((\\d+(\\.\\d+)?)?(\\*(?=[A-z]))?([A-z](\\^\\d+)?)?)(?=\\+|-|$))+$";
@@ -118,20 +118,20 @@ public class Main {
         maxDegree = Integer.parseInt(reduced.substring(reduced.lastIndexOf("^") + 1));
 
         // if (sumNumbers > 0)
-        //     reduced.append("+" + Float.toString(sumNumbers) + " = 0");
+        // reduced.append("+" + Float.toString(sumNumbers) + " = 0");
         // else if (sumNumbers == 0)
-        //     reduced.append(" = 0");
+        // reduced.append(" = 0");
         // else
-        //     reduced.append(Float.toString(sumNumbers) + " = 0");
+        // reduced.append(Float.toString(sumNumbers) + " = 0");
 
         if (sumNumbers > 0)
-        reduced.append("+" + (detectType.isInteger(sumNumbers) ? Integer.toString((int)sumNumbers) : Float.toString(sumNumbers) + " = 0"));
-    else if (sumNumbers == 0)
-        reduced.append(" = 0");
-    else
-        reduced.append((detectType.isInteger(sumNumbers) ? Integer.toString((int)sumNumbers) : Float.toString(sumNumbers) + " = 0"));
-
-            
+            reduced.append("+" + (detectType.isInteger(sumNumbers) ? Integer.toString((int) sumNumbers)
+                    : Float.toString(sumNumbers) + " = 0"));
+        else if (sumNumbers == 0)
+            reduced.append(" = 0");
+        else
+            reduced.append((detectType.isInteger(sumNumbers) ? Integer.toString((int) sumNumbers)
+                    : Float.toString(sumNumbers) + " = 0"));
 
         System.out.println("Reduced form: " + reduced);
         System.out.println("Polynomial degree: " + maxDegree);
@@ -259,9 +259,10 @@ class PolynomialEquation {
     @Override
     public String toString() {
         String coef;
-    
+
         if (coefficient >= 0)
-            coef = "+" + (detectType.isInteger(coefficient) ? Integer.toString((int)this.coefficient) : Float.toString(this.coefficient)) ;
+            coef = "+" + (detectType.isInteger(coefficient) ? Integer.toString((int) this.coefficient)
+                    : Float.toString(this.coefficient));
         else
             coef = Float.toString(this.coefficient);
         // System.out.println("coef = " + coef);
