@@ -8,18 +8,11 @@ public class Main {
     public static ArrayList<PolynomialEquation> Polynomials = new ArrayList<PolynomialEquation>();
 
     static String reducedForm(String input, char letter) {
-
-// X^2
-
-// 4X^2
-// -X^2
-
-// 2*X
-
+ 
+        // handl cases  X^2  4X^2 -X^2 2*X
         if (input.charAt(0) == letter)
             input = ("1*").concat(Character.toString(letter)) + input.substring(1);
-        
-        
+
         for (int i = 1; i < input.length(); i++) {
             if (input.charAt(i) == letter && input.charAt(i - 1) != '*') {
                 if (Character.isDigit(input.charAt(i - 1))) {
@@ -52,6 +45,12 @@ public class Main {
         System.out.println("\nrightHandSide = " + rightHandSide);
         System.out.println("leftHandSide  = " + leftHandSide + "\n");
     
+        if (leftHandSide.compareTo(rightHandSide) == 0)
+        {
+            System.out.println("Infinitely Many Solutions");
+            System.exit(0);
+        }
+            
         for (int i = 0; i < rightHandSide.length(); i++) {
             if (rightHandSide.charAt(i) == '+') {
                 rightHandSide = rightHandSide.substring(0, i) + "#-" + rightHandSide.substring(i + 1);
