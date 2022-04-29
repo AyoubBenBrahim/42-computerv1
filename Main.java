@@ -8,8 +8,8 @@ public class Main {
     public static ArrayList<PolynomialEquation> Polynomials = new ArrayList<PolynomialEquation>();
 
     static void reducedForm(String input, char letter) {
- 
-        // handl cases  X^2  4X^2 -X^2 2*X
+
+        // handl cases X^2 4X^2 -X^2 2*X
         if (input.charAt(0) == letter)
             input = ("1*").concat(Character.toString(letter)) + input.substring(1);
 
@@ -24,7 +24,7 @@ public class Main {
                 }
             }
             if ((input.charAt(i) == letter && i == input.length() - 1)
-                    || (input.charAt(i) == letter && i + 1 != input.length() &&  input.charAt(i + 1) != '^')) {
+                    || (input.charAt(i) == letter && i + 1 != input.length() && input.charAt(i + 1) != '^')) {
                 input = input.substring(0, i) + Character.toString(letter).concat("^1") + input.substring(i + 1);
                 i += 2;
             }
@@ -42,13 +42,13 @@ public class Main {
 
         System.out.println("\nrightHandSide = " + rightHandSide);
         System.out.println("leftHandSide  = " + leftHandSide + "\n");
-    
-        if (leftHandSide.compareTo(rightHandSide) == 0)
-        {
-            System.out.println("Infinitely Many Solutions");
-            System.exit(0);
-        }
-            
+
+        // if (leftHandSide.compareTo(rightHandSide) == 0)
+        // {
+        // System.out.println("Infinitely Many Solutions");
+        // System.exit(0);
+        // }
+
         for (int i = 0; i < rightHandSide.length(); i++) {
             if (rightHandSide.charAt(i) == '+') {
                 rightHandSide = rightHandSide.substring(0, i) + "#-" + rightHandSide.substring(i + 1);
@@ -58,7 +58,7 @@ public class Main {
                 i++;
             }
         }
-    
+
         leftHandSide = leftHandSide.replace("+", "#+");
         leftHandSide = leftHandSide.replace("-", "#-");
 
@@ -73,7 +73,7 @@ public class Main {
         System.out.println("****** Extracting Terms ****");
 
         for (String str : splitString) {
-            System.out.println(str );
+            System.out.println(str);
             if (str.indexOf(letter) == -1) {
                 if (!str.isEmpty())
                     sumNumbers += Float.parseFloat(str);
@@ -137,7 +137,7 @@ public class Main {
         // System.out.println("Reduced form: " + reduced);
         if (reduced.charAt(0) == '+')
             reduced.replace(0, 1, "");
-        
+
         System.out.print("Reduced form: ");
         reduced.toString().chars().forEach(
                 c -> {
@@ -149,7 +149,7 @@ public class Main {
         System.out.print("\n");
 
         System.out.println("Polynomial degree: " + maxDegree + "\n");
-       
+
         if (maxDegree > 2) {
             System.err.println("The polynomial degree is strictly greater than 2, I can't solve.");
             System.exit(1);
@@ -168,16 +168,29 @@ public class Main {
         System.out.println("A = " + A);
         System.out.println("B = " + B);
         System.out.println("C = " + sumNumbers);
+        
+        if (A == 0 && B == 0) {
+            if (sumNumbers == 0)
+                System.out.println("Infinitely Many Solutions"); // -X + X + 0 = 0
+            else
+                System.out.println("No Solution.."); // -X + X + 1 = 0
+            System.exit(0);
+        }
+
+        System.out.println("A = " + A);
+        System.out.println("B = " + B);
+        System.out.println("C = " + sumNumbers);
 
         System.out.println("    Where: Ax^2 + Bx + C = 0\n");
-        
+
         Double delta = (double) (B * B - 4 * A * sumNumbers);
-        
+
         System.out.println("delta = B^2 - 4AC = " + delta + "\n");
 
+        
 
         Float res;
-        if (reduced.indexOf("^2") == -1) {
+        if (reduced.indexOf("^2") == -1 || A == 0) {
             if (sumNumbers == 0)
                 res = 0.0f;
             else {
@@ -190,10 +203,9 @@ public class Main {
             if (delta > 0) {
                 System.out.println("Discriminant is strictly positive, the two solutions are: ");
 
-                
                 Double x1 = (-B + Math.sqrt(delta)) / (2 * A);
                 Double x2 = (-B - Math.sqrt(delta)) / (2 * A);
-                
+
                 System.out.println("x1 = -B + sqrt(Δ) / 2A = " + x1);
                 System.out.println("x2 = -B - sqrt(Δ) / 2A = " + x2);
             }
@@ -271,12 +283,19 @@ class PolynomialEquation {
         String coef;
 
         if (coefficient >= 0)
-            coef = "+" + (detectType.isInteger(coefficient) ? Integer.toString((int)coefficient)
+            coef = "+" + (detectType.isInteger(coefficient) ? Integer.toString((int) coefficient)
                     : Float.toString(this.coefficient));
         else
-            coef = (detectType.isInteger(coefficient) ? Integer.toString((int)coefficient) : Float.toString(coefficient));;
+            coef = (detectType.isInteger(coefficient) ? Integer.toString((int) coefficient)
+                    : Float.toString(coefficient));
+        ;
         // if (getCoefficient() == 0)
-        //     return "0.0"; // ""
+        // return "0.0"; // ""
         return coef + "*" + Character.toString(variable) + "^" + this.degree;
     }
 }
+
+
+
+// 1 = 2 => No Solution
+// 1 = 1 => Infinitely Many Solutions
