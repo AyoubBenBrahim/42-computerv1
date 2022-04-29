@@ -7,7 +7,7 @@ public class Main {
     private static Integer maxDegree;
     public static ArrayList<PolynomialEquation> Polynomials = new ArrayList<PolynomialEquation>();
 
-    static String reducedForm(String input, char letter) {
+    static void reducedForm(String input, char letter) {
  
         // handl cases  X^2  4X^2 -X^2 2*X
         if (input.charAt(0) == letter)
@@ -33,8 +33,6 @@ public class Main {
         String[] arr = input.split("=");
         String leftHandSide = arr[0];
         String rightHandSide = arr[1];
-        // rightHandSide = "8.123*X^109991-6*X^4+11*X^2-5.6*X^3+33-15-8*X^2";
-        // leftHandSide = "2*X^5-6*X^4+11*X^2-5.6*X^3+22-15-18*X^2";
 
         if (Character.isDigit(rightHandSide.charAt(0)))
             rightHandSide = ("+").concat(rightHandSide);
@@ -220,8 +218,6 @@ public class Main {
                 System.out.println("Δ = " + delta.intValue() + " = " + (-delta.intValue()) + "i²");
             }
         }
-
-        return " ";
     }
 
     public static void main(String[] args) {
