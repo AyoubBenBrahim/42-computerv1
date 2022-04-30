@@ -168,9 +168,11 @@ public class Main {
         System.out.println("A = " + A);
         System.out.println("B = " + B);
         System.out.println("C = " + sumNumbers);
-        
+
+        System.out.println("tatatatat " + reduced.substring(0, reduced.indexOf("*")));
+
         if (A == 0 && B == 0) {
-            if (sumNumbers == 0)
+            if (sumNumbers == 0 || (-sumNumbers == Float.parseFloat(reduced.substring(0, reduced.indexOf("*")))) )
                 System.out.println("Infinitely Many Solutions"); // -X + X + 0 = 0
             else
                 System.out.println("No Solution.."); // -X + X + 1 = 0
@@ -297,5 +299,5 @@ class PolynomialEquation {
 
 
 
-// 1 = 2 => No Solution
-// 1 = 1 => Infinitely Many Solutions
+// 1 = 2 => No Solution 2 = -1    2 = -2
+// 1 = 1 => Infinitely Many Solutions 2 = 2
