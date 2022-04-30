@@ -40,14 +40,28 @@ public class Main {
         if (Character.isDigit(leftHandSide.charAt(0)))
             leftHandSide = ("+").concat(leftHandSide);
 
+        // handl case 2 = 2 , ...
+        if (letter == '\0') {
+            char left[] = leftHandSide.toCharArray();
+            Arrays.sort(left);
+
+            char right[] = rightHandSide.toCharArray();
+            Arrays.sort(right);
+
+            if (new String(left).compareTo(new String(right)) == 0) {
+                System.out.println("Reduced form: N * X^0 - N = 0");
+                System.out.println("Polynomial degree: −∞");
+                System.out.println("\nInfinitely Many Solutions");
+            } else {
+                System.out.println("Reduced form:  N * X^0 = 0");
+                System.out.println("Polynomial degree: 0");
+                System.out.println("\nNo Solution..");
+            }
+            System.exit(0);
+        }
+
         System.out.println("\nrightHandSide = " + rightHandSide);
         System.out.println("leftHandSide  = " + leftHandSide + "\n");
-
-        // if (leftHandSide.compareTo(rightHandSide) == 0)
-        // {
-        // System.out.println("Infinitely Many Solutions");
-        // System.exit(0);
-        // }
 
         for (int i = 0; i < rightHandSide.length(); i++) {
             if (rightHandSide.charAt(i) == '+') {
@@ -63,8 +77,6 @@ public class Main {
         leftHandSide = leftHandSide.replace("-", "#-");
 
         String fullEquation = leftHandSide.concat(rightHandSide);
-        // System.out.println("newRightHandSide = " + rightHandSide);
-        // System.out.println("full = " + fullEquation);
 
         String[] splitString = fullEquation.split("#");
 
@@ -87,11 +99,8 @@ public class Main {
             }
         }
 
-        // System.out.println("Summmmm " + sumNumbers);
-
         System.out.println("\n****** Sort Terms By Degree ****\n");
 
-        // Polynomials.forEach(p -> System.out.println(p));
         Collections.sort(Polynomials, new Comparator<PolynomialEquation>() {
             @Override
             public int compare(PolynomialEquation p1, PolynomialEquation p2) {
@@ -134,7 +143,6 @@ public class Main {
             reduced.append((detectType.isInteger(sumNumbers) ? Integer.toString((int) sumNumbers)
                     : Float.toString(sumNumbers) + " = 0"));
 
-        // System.out.println("Reduced form: " + reduced);
         if (reduced.charAt(0) == '+')
             reduced.replace(0, 1, "");
 
@@ -169,27 +177,19 @@ public class Main {
         System.out.println("B = " + B);
         System.out.println("C = " + sumNumbers);
 
-        System.out.println("tatatatat " + reduced.substring(0, reduced.indexOf("*")));
-
         if (A == 0 && B == 0) {
-            if (sumNumbers == 0 || (-sumNumbers == Float.parseFloat(reduced.substring(0, reduced.indexOf("*")))) )
-                System.out.println("Infinitely Many Solutions"); // -X + X + 0 = 0
+            if (sumNumbers == 0 || (-sumNumbers == Float.parseFloat(reduced.substring(0, reduced.indexOf("*")))))
+                System.out.println("\nInfinitely Many Solutions"); // -X + X + 0 = 0 2X^0 = 2
             else
-                System.out.println("No Solution.."); // -X + X + 1 = 0
+                System.out.println("\nNo Solution.."); // -X + X + 1 = 0 2X^0 = -2
             System.exit(0);
         }
-
-        System.out.println("A = " + A);
-        System.out.println("B = " + B);
-        System.out.println("C = " + sumNumbers);
 
         System.out.println("    Where: Ax^2 + Bx + C = 0\n");
 
         Double delta = (double) (B * B - 4 * A * sumNumbers);
 
         System.out.println("delta = B^2 - 4AC = " + delta + "\n");
-
-        
 
         Float res;
         if (reduced.indexOf("^2") == -1 || A == 0) {
@@ -239,7 +239,7 @@ public class Main {
 
             if ((args[0].matches(pattern)) == false)
                 throw new ComputorV1Exception("Equation Bad Syntaxe FORMAT\n");
-            char letter = 'X';
+            char letter = '\0';
             for (int i = 0; i < args[0].length(); i++) {
                 if (Character.isAlphabetic(args[0].charAt(i))) {
                     letter = args[0].charAt(i);
@@ -297,7 +297,5 @@ class PolynomialEquation {
     }
 }
 
-
-
-// 1 = 2 => No Solution 2 = -1    2 = -2
+// 1 = 2 => No Solution 2 = -1 2 = -2
 // 1 = 1 => Infinitely Many Solutions 2 = 2
