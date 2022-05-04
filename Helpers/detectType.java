@@ -1,4 +1,4 @@
-package noName;
+package Helpers;
 
 public class detectType {
 

@@ -1,6 +1,7 @@
 
 import java.util.*;
-import noName.*;
+
+import Helpers.*;
 
 public class Main {
     private static final String pattern = "^(?!\\*)((\\+|-)?(?!$|\\+|-|=|\\*)((\\d+(\\.\\d+)?)?(\\*(?=[A-z]))?([A-z](\\^\\d+)?)?)(?=\\+|-|=|$))+={1}((\\+|-)?(?!$|\\+|-|\\*)((\\d+(\\.\\d+)?)?(\\*(?=[A-z]))?([A-z](\\^\\d+)?)?)(?=\\+|-|$))+$";
@@ -205,8 +206,8 @@ public class Main {
             if (delta > 0) {
                 System.out.println("Discriminant is strictly positive, the two solutions are: ");
 
-                Double x1 = (-B + Math.sqrt(delta)) / (2 * A);
-                Double x2 = (-B - Math.sqrt(delta)) / (2 * A);
+                Double x1 = (-B + ft_sqrt.sqrt(delta)) / (2 * A);
+                Double x2 = (-B - ft_sqrt.sqrt(delta)) / (2 * A);
 
                 System.out.println("x1 = -B + sqrt(Δ) / 2A = " + x1);
                 System.out.println("x2 = -B - sqrt(Δ) / 2A = " + x2);
