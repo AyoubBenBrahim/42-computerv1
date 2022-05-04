@@ -214,7 +214,7 @@ public class Main {
                 Double x1 = (-B + ft_sqrt.sqrt(delta)) / (2 * A);
                 Double x2 = (-B - ft_sqrt.sqrt(delta)) / (2 * A);
 
-                System.out.println("x1 = -B + sqrt(Δ) / 2A = \n" + x1);
+                System.out.println("x1 = -B + sqrt(Δ) / 2A = " + x1);
                 System.out.println("x2 = -B - sqrt(Δ) / 2A = " + x2);
             }
 
@@ -307,4 +307,4 @@ class PolynomialEquation {
 // 1 = 2 => No Solution 2 = -1 2 = -2
 // 1 = 1 => Infinitely Many Solutions 2 = 2
 
-// ./computor.sh "10 * X^2 - 144 * X^2 + X^0= 1" complex
+// ./computor.sh "10 * X^2 - 144 * X^2 + X^0 = 1" complex    14X^2 = -1
