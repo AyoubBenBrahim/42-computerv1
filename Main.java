@@ -283,7 +283,7 @@ class PolynomialEquation {
     @Override
     public String toString() {
         String coef;
-
+        
         if (coefficient >= 0)
             coef = "+" + (detectType.isInteger(coefficient) ? Integer.toString((int) coefficient)
                     : Float.toString(this.coefficient));
