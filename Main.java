@@ -10,10 +10,14 @@ public class Main {
 
     static void reducedForm(String input, char letter) {
 
+
+        input = input.replace("+X^0", "+1");
+        input = input.replace("-X^0", "-1");
+
         // handl cases X^2 4X^2 -X^2 2*X
         if (input.charAt(0) == letter)
-            input = ("1*").concat(Character.toString(letter)) + input.substring(1);
-
+        input = ("1*").concat(Character.toString(letter)) + input.substring(1);
+        
         for (int i = 1; i < input.length(); i++) {
             if (input.charAt(i) == letter && input.charAt(i - 1) != '*') {
                 if (Character.isDigit(input.charAt(i - 1))) {
@@ -25,12 +29,13 @@ public class Main {
                 }
             }
             if ((input.charAt(i) == letter && i == input.length() - 1)
-                    || (input.charAt(i) == letter && i + 1 != input.length() && input.charAt(i + 1) != '^')) {
+            || (input.charAt(i) == letter && i + 1 != input.length() && input.charAt(i + 1) != '^')) {
                 input = input.substring(0, i) + Character.toString(letter).concat("^1") + input.substring(i + 1);
                 i += 2;
             }
         }
-        // System.out.println("input = " + input);
+        
+        input = input.replace("*X^0", "");
         String[] arr = input.split("=");
         String leftHandSide = arr[0];
         String rightHandSide = arr[1];
@@ -224,25 +229,16 @@ public class Main {
             if (delta < 0) {
                 System.out.println("Discriminant is strictly Negative ");
                 System.out.println("the quadratic equation has two different complex roots : \n");
-// -b / (2 * a) + i * sqrt(abs(Δ)) / (2 * a)
-// -b / (2 * a) - i * sqrt(abs(Δ)) / (2 * a)
-                System.out.println(
-                        "x1 = -B / (2 * A) + i * sqrt(abs(Δ)) / (2 * A) = " +   (-B / (2 * A)) + " + i * (" + ft_sqrt.sqrt(delta * -1) / (2 * A) + ")");
-                        System.out.println(
-                            "\nx1 = -B / (2 * A) - i * sqrt(abs(Δ)) / (2 * A) = " +   (-B / (2 * A)) + " - i * (" + ft_sqrt.sqrt(delta * -1) / (2 * A) + ")");
-                // System.out.println(
-                //         "x2 = (-B - β) / (2 * A) = (" + (-B.intValue() + " - " + "β") + ") / " + (2 * A.intValue()));
-                // System.out.println("where β^2 = Delta");
 
+                System.out.println("x1 = -B / (2 * A) + i * sqrt(abs(Δ)) / (2 * A)");
+                System.out.println("x2 = -B / (2 * A) - i * sqrt(abs(Δ)) / (2 * A)\n");
 
-// System.out.println(
-//                         "x1 = (-B + β) / (2 * A) = (" + (-B.intValue() + " + " + "β") + ") / " + (2 * A.intValue()));
-//                 System.out.println(
-//                         "x2 = (-B - β) / (2 * A) = (" + (-B.intValue() + " - " + "β") + ") / " + (2 * A.intValue()));
-//                 System.out.println("where β^2 = Delta");
+                double p1 = (-B / (2 * A));
+                String tmp = p1 == 0 ? "" : Double.toString(p1);
+                double p2 = ft_sqrt.sqrt(delta * -1) / (2 * A);
 
-
-                // System.out.println("Δ = " + delta.intValue() + " = " + (-delta.intValue()) + "i²");
+                System.out.println("x1 =  " + tmp + " + i * (" + String.format("%.4f",p2) + ")");
+                System.out.println("x2 = " + tmp + " - i * ("+ String.format("%.4f",p2) + ")");
             }
         }
     }
@@ -251,7 +247,7 @@ public class Main {
         try {
 
             if ((args[0].matches(pattern)) == false)
-                throw new ComputorV1Exception("Equation Bad Syntaxe FORMAT\n");
+                throw new ComputorV1Exception("Equation Bad FORMAT\n");
             char letter = '\0';
             for (int i = 0; i < args[0].length(); i++) {
                 if (Character.isAlphabetic(args[0].charAt(i))) {
@@ -296,22 +292,19 @@ class PolynomialEquation {
     @Override
     public String toString() {
         String coef;
-        
+
         if (coefficient >= 0)
             coef = "+" + (detectType.isInteger(coefficient) ? Integer.toString((int) coefficient)
                     : Float.toString(this.coefficient));
         else
             coef = (detectType.isInteger(coefficient) ? Integer.toString((int) coefficient)
                     : Float.toString(coefficient));
-        ;
-        // if (getCoefficient() == 0)
-        // return "0.0"; // ""
+    
         return coef + "*" + Character.toString(variable) + "^" + this.degree;
     }
 }
 
 // 1 = 2 => No Solution 2 = -1 2 = -2
 // 1 = 1 => Infinitely Many Solutions 2 = 2
-
 
 // ./computor.sh "10 * X^2 - 144 * X^2 + X^0= 1" complex
