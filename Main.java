@@ -10,9 +10,8 @@ public class Main {
 
     static void reducedForm(String input, char letter) {
 
-
-        input = input.replace("+X^0", "+1");
-        input = input.replace("-X^0", "-1");
+        input = input.replace("+" + letter + "^0", "+1");
+        input = input.replace("-" + letter + "^0", "-1");
 
         // handl cases X^2 4X^2 -X^2 2*X
         if (input.charAt(0) == letter)
@@ -35,7 +34,7 @@ public class Main {
             }
         }
         
-        input = input.replace("*X^0", "");
+        input = input.replace("*" + letter + "^0", "");
         String[] arr = input.split("=");
         String leftHandSide = arr[0];
         String rightHandSide = arr[1];
@@ -47,7 +46,7 @@ public class Main {
             leftHandSide = ("+").concat(leftHandSide);
 
         // handl case 2 = 2 , ...
-        if (letter == '\0') {
+        if (letter == '\0' || input.indexOf(letter) == -1) {
             char left[] = leftHandSide.toCharArray();
             Arrays.sort(left);
 
@@ -185,9 +184,9 @@ public class Main {
 
         if (A == 0 && B == 0) {
             if (sumNumbers == 0 || (-sumNumbers == Float.parseFloat(reduced.substring(0, reduced.indexOf("*")))))
-                System.out.println("\nInfinitely Many Solutions"); // -X + X + 0 = 0 2X^0 = 2
+                System.out.println("\nInfinitely Many Solutions"); // -X + X + 0 = 0   2X^0 = 2
             else
-                System.out.println("\nNo Solution.."); // -X + X + 1 = 0 2X^0 = -2
+                System.out.println("\nNo Solution.."); // -X + X + 1 = 0    2X^0 = -2
             System.exit(0);
         }
 
