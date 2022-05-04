@@ -300,3 +300,6 @@ class PolynomialEquation {
 
 // 1 = 2 => No Solution 2 = -1 2 = -2
 // 1 = 1 => Infinitely Many Solutions 2 = 2
+
+
+// ./computor.sh "10 * X^2 - 144 * X^2 + X^0= 1" complex
