@@ -204,18 +204,18 @@ public class Main {
 
         else {
             if (delta > 0) {
-                System.out.println("Discriminant is strictly positive, the two solutions are: ");
+                System.out.println("Discriminant is strictly positive, the two solutions are: \n");
 
                 Double x1 = (-B + ft_sqrt.sqrt(delta)) / (2 * A);
                 Double x2 = (-B - ft_sqrt.sqrt(delta)) / (2 * A);
 
-                System.out.println("x1 = -B + sqrt(Δ) / 2A = " + x1);
+                System.out.println("x1 = -B + sqrt(Δ) / 2A = \n" + x1);
                 System.out.println("x2 = -B - sqrt(Δ) / 2A = " + x2);
             }
 
             if (delta == 0) {
                 System.out.println("Discriminant is Equal to Zero ");
-                System.out.println("the quadratic equation has two equal real roots: ");
+                System.out.println("the quadratic equation has two equal real roots: \n");
                 System.out.println("x1 = x2 = -B / 2A");
 
                 System.out.println("x1 = x2 = " + (-B / (2 * A)));
@@ -223,14 +223,26 @@ public class Main {
 
             if (delta < 0) {
                 System.out.println("Discriminant is strictly Negative ");
-                System.out.println("the quadratic equation has two different complex roots : ");
+                System.out.println("the quadratic equation has two different complex roots : \n");
+// -b / (2 * a) + i * sqrt(abs(Δ)) / (2 * a)
+// -b / (2 * a) - i * sqrt(abs(Δ)) / (2 * a)
+                System.out.println(
+                        "x1 = -B / (2 * A) + i * sqrt(abs(Δ)) / (2 * A) = " +   (-B / (2 * A)) + " + i * (" + ft_sqrt.sqrt(delta * -1) / (2 * A) + ")");
+                        System.out.println(
+                            "\nx1 = -B / (2 * A) - i * sqrt(abs(Δ)) / (2 * A) = " +   (-B / (2 * A)) + " - i * (" + ft_sqrt.sqrt(delta * -1) / (2 * A) + ")");
+                // System.out.println(
+                //         "x2 = (-B - β) / (2 * A) = (" + (-B.intValue() + " - " + "β") + ") / " + (2 * A.intValue()));
+                // System.out.println("where β^2 = Delta");
 
-                System.out.println(
-                        "x1 = (-B + β) / (2 * A) = (" + (-B.intValue() + " + " + "β") + ") / " + (2 * A.intValue()));
-                System.out.println(
-                        "x2 = (-B - β) / (2 * A) = (" + (-B.intValue() + " - " + "β") + ") / " + (2 * A.intValue()));
-                System.out.println("where β^2 = Delta");
-                System.out.println("Δ = " + delta.intValue() + " = " + (-delta.intValue()) + "i²");
+
+// System.out.println(
+//                         "x1 = (-B + β) / (2 * A) = (" + (-B.intValue() + " + " + "β") + ") / " + (2 * A.intValue()));
+//                 System.out.println(
+//                         "x2 = (-B - β) / (2 * A) = (" + (-B.intValue() + " - " + "β") + ") / " + (2 * A.intValue()));
+//                 System.out.println("where β^2 = Delta");
+
+
+                // System.out.println("Δ = " + delta.intValue() + " = " + (-delta.intValue()) + "i²");
             }
         }
     }
